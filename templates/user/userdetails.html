@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<form action="" method="get">
+ <h2 align="center">User Details</h2>
+  <table width="285" border="1" align="center">
+ 
+  <tr>
+      <td colspan="2">&nbsp;</td>
+    <tr>
+      <td width="131" align="center">Name</td>
+      <td>{{ data['uname'] }}</td>
+    </tr>
+    <tr>
+      <td align="center">Email</td>
+      <td>{{ data['uemail'] }}</td>
+    </tr>
+
+      <tr>
+      <td align="center">Phone Number</td>
+      <td>{{ data['uphone'] }}</td>
+    </tr>
+      <tr>
+      <td align="center">image</td>
+      <td><img src="{{ data['uimage'] }}" height="100px" width="100px"> </td>
+    </tr>
+      <tr>
+      <td align="center">Dob</td>
+      <td>{{ data['udob'] }}</td>
+    </tr>
+  </table>
+
+</form>
+</body>
+</html>

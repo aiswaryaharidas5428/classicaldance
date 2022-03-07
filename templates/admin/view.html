@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post" action='/view_postdance'>
+<h2 align="center">DANCE VIEW</h2>
+  <div align="center">
+      <table border="0" align="center">
+
+
+        <tr>
+            <td>Dance Name</td>
+            <td><input type="text" name="textfield"></td>
+            <td><input type="submit" name="submit" value="SEARCH"></td>
+        </tr>
+
+    </table>
+
+
+<br>
+    <table width="395" border="1">
+      <tr>
+        <th width="27" scope="col">SL.NO</th>
+        <th width="86" scope="col">NAME</th>
+        <th width="78" scope="col">DESCRIPTION</th>
+        <th width="102" scope="col">IMAGE</th>
+        <th width="68" scope="col">&nbsp;</th>
+      </tr>
+        {% for i in data %}
+      <tr>
+        <td>&nbsp;{{ loop.index }}</td>
+        <td>&nbsp;{{ i['dname'] }}</td>
+        <td>&nbsp;{{ i['ddescrip'] }}</td>
+        <td><img src="{{ i['dimage'] }}" height="100px" width="100px">&nbsp;</td>
+        <td><p><a href="/edit_dance/{{ i ['did'] }}">Edit</a></p>
+        <p><a href="/delete_dance/{{ i['did'] }}">Delete</a></p></td>
+      </tr>
+        {% endfor %}
+    </table>
+  </div>
+</form>
+</body>
+</html>
