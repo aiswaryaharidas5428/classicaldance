@@ -15,7 +15,7 @@ def hello_world():
 
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    return render_template('index.html')
 
 @app.route('/login_post',methods=['post'])
 def login_post():
@@ -54,7 +54,7 @@ def add_post():
     qry="insert into dance(dname,dimage,ddescrip)values('"+name+"','"+path+"','"+description+"')"
     res=db.insert(qry)
 
-    return 'ok'
+    return "<script>alert('successfully added');window.location='/add'</script>"
 
 
 @app.route('/view_dance')
@@ -191,6 +191,10 @@ def change_password_post():
         return '''<script>alert('password changed');window.location='/login'</script>'''
     else:
         return '''<script>alert('password not changed');window.location='/change_password'</script>'''
+
+@app.route('/admintemp')
+def admintemp():
+    return render_template('admin/index.html')
 
 
 
