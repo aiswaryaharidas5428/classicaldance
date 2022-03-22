@@ -1,3 +1,7 @@
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 from flask import Flask, render_template, request, session
 
 from dbconnection import Db
@@ -6,16 +10,30 @@ from dbconnection import Db
 app = Flask(__name__)
 app.secret_key = "hi"
 
-static_path="C:\\Users\\M G HARIDAS\\PycharmProjects\\classicaldance\\static\\"
+static_path="C:\\classicaldance\\static\\"
+
 @app.route('/hi')
 def hello_world():
     return 'Hello World!'
 
 
 
+
+@app.route('/')
+def launching():
+    return render_template('launching_index.html')
+
+@app.route('/user_ind')
+def user_ind():
+    return render_template('user/user_index.html')
+
+
+
+
 @app.route('/login')
 def login():
     return render_template('index.html')
+
 
 @app.route('/login_post',methods=['post'])
 def login_post():
@@ -30,7 +48,7 @@ def login_post():
         if res["type"]=="admin":
             return '''<script>alert('successs');window.location='/adminhome'</script>'''
         elif res["type"]=="user":
-            return '''<script>alert('successs');window.location='/usrhome'</script>'''
+            return '''<script>alert('successs');window.location='/user_ind'</script>'''
         else:
             return '''<script>alert('invalid');window.location='/login'</script>'''
     else:
@@ -172,11 +190,29 @@ def adminhome():
 
 
 
+@app.route('/admin_change_password')
+def admin_change_password():
+    return render_template('admin/user_change_password.html')
 
+@app.route('/admin_change_password_post',methods=['post'])
+def admin_change_password_post():
+    cu_pass=request.form['textfield']
+    nw_pass=request.form['textfield2']
+    re_type=request.form['textfield3']
+    db = Db()
+    qry = "select * from login where password='"+cu_pass+"'"
+    res=db.selectOne(qry)
+    if(nw_pass==re_type):
+        qry1="update login set password='"+nw_pass+"' where logid='"+str(session['lid'])+"'"
+        res2=db.update(qry1)
+        return '''<script>alert('password changed');window.location='/login'</script>'''
+    else:
+        return '''<script>alert('password not changed');window.location='/change_password'</script>'''
 
 @app.route('/change_password')
 def change_password():
     return render_template('user/passwdreset.html')
+
 @app.route('/change_password_post',methods=['post'])
 def change_password_post():
     cu_pass=request.form['textfield']
@@ -221,7 +257,8 @@ def user_reg_post():
     qry2="insert into user(ulogid,uname,udob,uphone,uimage,uemail)values('"+str(res)+"','"+fname+"','"+dob+"','"+phone+"','"+path+"','"+emailid+"')"
     print(qry2)
     res2=db.insert(qry2)
-    return render_template('login.html',data=res2)
+
+    return render_template('index.html',data=res2)
 
 
 
@@ -236,6 +273,52 @@ def view_profile():
 @app.route('/usrhome')
 def usrhome():
     return render_template('user/usrhome.html')
+
+@app.route('/upload')
+def upload():
+    return render_template('user/upload.html')
+
+
+@app.route('/forget')
+def forget():
+    return render_template('forgetpass.html')
+
+@app.route('/forgetpass_post',methods=['post'])
+def forgetpass_post():
+
+
+    emailid = request.form['textfield']
+    db=Db()
+    qry="select * from login where uname='"+emailid+"'"
+    r=db.select(qry)
+    if r is not None:
+
+
+        s = smtplib.SMTP(host='smtp.gmail.com', port=587)
+        s.starttls()
+        s.login("classicaldancecnn", "classical@dance1")
+        msg = MIMEMultipart()  # create a message.........."
+        message = "Messege from DNTL"
+        msg['From'] = "aswathik34@gmail.com"
+        msg['To'] = emailid
+        msg['Subject'] = "Your Password for classicaldance"
+        body = "Your Account has been verified by our team. You Can login using your password - " + str(r["password"])
+        msg.attach(MIMEText(body, 'plain'))
+        s.send_message(msg)
+        return "ok"
+    else:
+        return "no"
+
+
+
+
+
+
+
+
+print("qry")
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
