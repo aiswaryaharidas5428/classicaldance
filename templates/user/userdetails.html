@@ -1,31 +1,36 @@
 {% extends 'user/user_index.html' %}
 {% block body %}
 <form action="" method="get">
+<<<<<<< Updated upstream
  <h2 align="center"  style="font-family: 'Times New Roman', Times, serif;" >User Details</h2>
   <table  class="table table-hover">
+=======
+
+<img src="{{ data['uimage'] }}" height="100px" width="100px"  style="margin-left: 50px;margin-top: 50px">
+    <br>
+  <table  class="table table-borderless" style="margin-top: 10px;margin-left: 50px;width: 80%">
+>>>>>>> Stashed changes
  
   <tr>
-      <td colspan="2">&nbsp;</td>
+      <th colspan="2">&nbsp;</th>
     <tr>
-      <td width="131" align="center">Name</td>
-      <td>{{ data['uname'] }}</td>
+      <th width="150px">Name</th>
+      <th>{{ data['uname'] }}</th>
     </tr>
     <tr>
-      <td align="center">Email</td>
-      <td>{{ data['uemail'] }}</td>
+      <th>Email</th>
+      <th>{{ data['uemail'] }}</th>
     </tr>
 
       <tr>
-      <td align="center">Phone Number</td>
-      <td>{{ data['uphone'] }}</td>
+      <th>Phone Number</th>
+      <th>{{ data['uphone'] }}</th>
+    </tr>
+
     </tr>
       <tr>
-      <td align="center">image</td>
-      <td><img src="{{ data['uimage'] }}" height="100px" width="100px"> </td>
-    </tr>
-      <tr>
-      <td align="center">Dob</td>
-      <td>{{ data['udob'] }}</td>
+      <th>Dob</th>
+      <th>{{ data['udob'] }}</th>
     </tr>
   </table>
 
